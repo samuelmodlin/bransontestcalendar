@@ -25,7 +25,7 @@ export default class App extends Component {
                     style={{marginBottom: "10px"}}
                 />
                 <Fullcalendar />
-                <Button onClick={this.handleModalOpen} variant="fab" color="primary" aria-label="add" style={{position: 'absolute', right: '5px', bottom: '5px'}}>
+                <Button onClick={this.handleModalOpen} variant="fab" color="primary" aria-label="add" style={{position: 'absolute', right: '5px', bottom: '5px', zIndex: "99"}}>
                     <AddIcon />
                 </Button>
                 <AddEvent   

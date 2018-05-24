@@ -9,7 +9,8 @@ export default class Calendar extends Component {
         events: [
             {
                 title: 'History Test',
-                start: '2018-05-08'
+                start: '2018-05-08',
+                fuckallofthis: "xd",
             },
             {
                 title: 'English Essay',
