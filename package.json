@@ -11,7 +11,8 @@
     "fullcalendar": "^3.9.0",
     "meteor-node-stubs": "^0.3.2",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "react-google-button": "^0.5.3"
   },
   "devDependencies": {}
 }

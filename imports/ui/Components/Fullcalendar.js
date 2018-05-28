@@ -10,7 +10,6 @@ export default class Calendar extends Component {
             {
                 title: 'History Test',
                 start: '2018-05-08',
-                fuckallofthis: "xd",
             },
             {
                 title: 'English Essay',
