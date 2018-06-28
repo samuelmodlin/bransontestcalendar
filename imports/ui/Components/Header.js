@@ -33,7 +33,7 @@ export default class Header extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-  logout = () => {
+  logout = (andGoogle) => {
     this.handleClose();
     this.props.logout();
   }
@@ -52,7 +52,7 @@ export default class Header extends React.Component {
               <IconButton
                 aria-owns={open ? 'menu-appbar' : null}
                 aria-haspopup="true"
-                onClick={this.handleMenu}
+                onClick={this.props.handleSettingsOpen}
                 color="inherit"
               >
                 <SettingsIcon />
@@ -80,6 +80,7 @@ export default class Header extends React.Component {
                 onClose={this.handleClose}
               >
                 <MenuItem onClick={this.logout}>Logout</MenuItem>
+
                 <MenuItem onClick={this.handleClose}>Admin Panel</MenuItem>
               </Menu>
             </div>

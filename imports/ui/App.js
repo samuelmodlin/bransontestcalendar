@@ -6,7 +6,11 @@ import GoogleButton from 'react-google-button'
 import Fullcalendar from './Components/Fullcalendar.js';
 import Header from './Components/Header.js';
 import AddEvent from './Components/AddEvent.js';
+import SettingsModal from './Components/SettingsModal.js';
 
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import { Tracker } from 'meteor/tracker';
 
 export default class App extends Component {
     state = {
@@ -14,35 +18,56 @@ export default class App extends Component {
         settingsModal: false,
         loggedIn: false,
     }
+    componentWillMount = () => {
+        Tracker.autorun(() => {
+            if (Accounts.loginServicesConfigured()) {
+                Meteor.loginWithGoogle({
+                }, (err) => {
+                    if (err) {
+                        this.setState({ loggedIn: false });
+                    } else {
+                        this.setState({ loggedIn: true });
+                    }
+                });
+            }
+          });
+    }
     handleModalOpen = () => {
         this.setState({ addModal: true });
     }
     handleModalClose = () => {
-        console.log('close');
         this.setState({ addModal: false });
+    }
+    handleSettingsOpen = () => {
+        this.setState({ settingsModal: true });
+    }
+    handleSettingsClose = () => {
+        this.setState({ settingsModal: false });
     }
     loginWithGoogle = () => {
         Meteor.loginWithGoogle({
         }, (err) => {
             if (err) {
-                console.log('false');
                 this.setState({ loggedIn: false });
             } else {
-                console.log('true');
                 this.setState({ loggedIn: true });
             }
         });
     }
     logout = () => {
-        Meteor.logout();
-        this.setState({ loggedIn: false });
+        Meteor.logout(() => {
+            console.log(Meteor.user());
+            if(Meteor.user() == null){
+                this.setState({ loggedIn: false });
+            }
+        });
     }
     render() {
         if (this.state.loggedIn) {
             return (
                 <div>
                     <Header
-                        addModal={this.state.addModal}
+                        handleSettingsOpen={this.handleSettingsOpen}
                         style={{ marginBottom: "10px" }}
                         logout={this.logout}
                     />
@@ -53,6 +78,17 @@ export default class App extends Component {
                     <AddEvent
                         addModal={this.state.addModal}
                         handleModalClose={this.handleModalClose}
+                        name={Meteor.user().profile.name}
+                        class=""
+                        department={0}
+                        date={undefined}
+                        type={undefined}
+                        blocks={[false, false, false, false, false, false, false]}
+                        grades={[false, false, false, false]}
+                    />
+                    <SettingsModal
+                        open={this.state.settingsModal}
+                        handleClose={this.handleSettingsClose}
                     />
                 </div>
             );

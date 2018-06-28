@@ -45,13 +45,13 @@ const styles = {
 }
 export default class AddEvent extends Component {
     state = {
-        name: 'Samuel Modlin',
-        class: 'Choose Class',
-        department: 0,
-        date: undefined,
-        type: undefined,
-        blocks: [false, false, false, false, false, false, false],
-        grades: [false, false, false, false],
+        name: this.props.name,
+        class: this.props.class,
+        department: this.props.department,
+        date: this.props.date,
+        type: this.props.type,
+        blocks: this.props.blocks,
+        grades: this.props.grades,
     }
     addAssessment = () => {
         this.props.handleModalClose();
@@ -83,6 +83,7 @@ export default class AddEvent extends Component {
         for (let i = 0; i < blocks.length; i++) {
             blockCheckboxes.push(
                 <FormControlLabel
+                    key={i}
                     control={
                         <Checkbox
                             key={i}

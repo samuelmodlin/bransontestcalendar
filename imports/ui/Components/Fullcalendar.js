@@ -1,33 +1,12 @@
 import React, { Component } from 'react';
 import Fullcalendar from 'fullcalendar';
-
-import './Styles/bootstrap.min.css'
+import './Styles/bootstrap.min.css';
 import 'fullcalendar/dist/fullcalendar.min.css';   
+import { Events } from '../../api/events.js';
 
 export default class Calendar extends Component {
     state = {
-        events: [
-            {
-                title: 'History Test',
-                start: '2018-05-08',
-            },
-            {
-                title: 'English Essay',
-                start: '2018-05-08'
-            },
-            {
-                title: 'Science Lab',
-                start: '2018-05-08'
-            },
-            {
-                title: 'Microbiology',
-                start: '2018-05-08'
-            },
-            {
-                title: 'Other',
-                start: '2018-05-08'
-            },
-        ]
+        events: Events.find({}).fetch(),
     }
     render() {
         return (
@@ -38,6 +17,7 @@ export default class Calendar extends Component {
         );
     }
     componentDidMount() {
+    console.log(this.state.events);
       $('#calendar').fullCalendar({
               themeSystem: 'bootstrap4',
               events: this.state.events,
