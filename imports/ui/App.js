@@ -10,27 +10,23 @@ import SettingsModal from './Components/SettingsModal.js';
 
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Tracker } from 'meteor/tracker';
+import EventDialog from './Components/EventDialog.js';
 
 export default class App extends Component {
     state = {
         addModal: false,
         settingsModal: false,
         loggedIn: false,
+        eventDialog: false,
+        eventObject: null,
     }
     componentWillMount = () => {
-        Tracker.autorun(() => {
-            if (Accounts.loginServicesConfigured()) {
-                Meteor.loginWithGoogle({
-                }, (err) => {
-                    if (err) {
-                        this.setState({ loggedIn: false });
-                    } else {
-                        this.setState({ loggedIn: true });
-                    }
-                });
-            }
-          });
+        if (Meteor.userId() === null) {
+            this.setState({ loggedIn: false });
+        }
+        else {
+            this.setState({ loggedIn: true });
+        }
     }
     handleModalOpen = () => {
         this.setState({ addModal: true });
@@ -43,6 +39,13 @@ export default class App extends Component {
     }
     handleSettingsClose = () => {
         this.setState({ settingsModal: false });
+    }
+    handleDialogOpen = (eventObject) => {
+        this.setState({ eventObject: eventObject });
+        this.setState({ eventDialog: true });
+    }
+    handleDialogClose = () => {
+        this.setState({ eventDialog: false });
     }
     loginWithGoogle = () => {
         Meteor.loginWithGoogle({
@@ -57,7 +60,7 @@ export default class App extends Component {
     logout = () => {
         Meteor.logout(() => {
             console.log(Meteor.user());
-            if(Meteor.user() == null){
+            if (Meteor.user() == null) {
                 this.setState({ loggedIn: false });
             }
         });
@@ -71,7 +74,9 @@ export default class App extends Component {
                         style={{ marginBottom: "10px" }}
                         logout={this.logout}
                     />
-                    <Fullcalendar />
+                    <Fullcalendar
+                        handleDialogOpen={this.handleDialogOpen}
+                    />
                     <Button onClick={this.handleModalOpen} variant="fab" color="primary" aria-label="add" style={{ position: 'absolute', right: '5px', bottom: '5px', zIndex: "99" }}>
                         <AddIcon />
                     </Button>
@@ -90,14 +95,22 @@ export default class App extends Component {
                         open={this.state.settingsModal}
                         handleClose={this.handleSettingsClose}
                     />
+                    {
+                        this.state.eventDialog &&
+                        <EventDialog 
+                        open={this.state.eventDialog}
+                        handleClose={this.handleDialogClose}
+                        event={this.state.eventObject}
+                        />
+                    }
                 </div>
             );
         } else {
             return (
-                <div style={{width: "100%", textAlign: "center"}}>
+                <div style={{ width: "100%", textAlign: "center" }}>
                     <GoogleButton
                         onClick={this.loginWithGoogle}
-                        style={{display: 'inline-block'}}
+                        style={{ display: 'inline-block' }}
                     />
                 </div>
             );

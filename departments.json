@@ -1,0 +1,64 @@
+{
+    "departments": [
+        {
+            "name": "Art",
+            "classes": [
+
+            ]
+        },
+        {
+            "name": "English",
+            "classes": [
+
+            ]
+        },
+        {
+            "name": "History",
+            "classes": [
+
+            ]
+        },
+        {
+            "name": "Language",
+            "classes": [
+
+            ]
+        },
+        {
+            "name": "Math",
+            "classes": [
+
+            ]
+        },
+        {
+            "name": "Science",
+            "classes": [
+                
+            ]
+        }
+    ],
+
+    "types": [
+        "Test",
+        "Paper",
+        "Project", 
+        "Lab Report" 
+    ],
+
+    "blocks": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+    ],
+
+    "grades": [
+        "9",
+        "10",
+        "11",
+        "12"
+    ]
+}

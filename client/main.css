@@ -5,3 +5,7 @@
 .fc-popover {
     background-color: white !important;
 }
+
+.fc-event-container:hover {
+    cursor: pointer;
+}

@@ -7,5 +7,9 @@ import '../imports/startup/both';
 
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById('render-target'));
+  Tracker.autorun(() => {
+    if (Accounts.loginServicesConfigured()) {
+      render(<App />, document.getElementById('render-target'));
+    }
+  });
 });

@@ -26,6 +26,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import Settings from "../../../departments.json";
+
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
@@ -54,7 +56,37 @@ export default class AddEvent extends Component {
         grades: this.props.grades,
     }
     addAssessment = () => {
-        this.props.handleModalClose();
+        if (this.state.name == "" || this.state.class == "" || this.state.date == undefined || this.state.type == undefined || this.state.blocks == [false, false, false, false, false, false, false] || this.state.grades == [false, false, false, false]) {
+            alert("Please fill out all fields!");
+        }
+        else {
+            Meteor.call('addEvent', {
+                name: this.state.name,
+                className: this.state.class,
+                department: this.state.department,
+                date: this.state.date,
+                type: this.state.type,
+                blocks: this.state.blocks,
+                grades: this.state.grades,
+                created: new Date(),
+                googleId: Meteor.userId(),
+            }, (err, res) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    this.setState({
+                        class: "",
+                        department: 0,
+                        date: undefined,
+                        type: undefined,
+                        blocks: [false, false, false, false, false, false, false],
+                        grades: [false, false, false, false],
+                    });
+                }
+            });
+            console.log("Added Event!");
+            this.props.handleModalClose();
+        }
     }
     handleTextChange = name => event => {
         this.setState({
@@ -66,12 +98,17 @@ export default class AddEvent extends Component {
         blocks[id] = event.target.checked;
         this.setState({ ["blocks"]: blocks });
     }
+    handleGradeChange = id => event => {
+        const grades = this.state.grades;
+        grades[id] = event.target.checked;
+        this.setState({ ["grades"]: grades });
+    }
     render() {
         const { addModal } = this.props
         const { handleModalClose } = this.props
 
         const typeRadioButtons = [];
-        const assessmentTypes = ["Test", "Paper", "Project", "Lab Report"];
+        const assessmentTypes = Settings.types;
         for (let i = 0; i < assessmentTypes.length; i++) {
             typeRadioButtons.push(
                 <FormControlLabel key={i} value={assessmentTypes[i]} control={<Radio color="primary" />} label={assessmentTypes[i]} />
@@ -79,7 +116,7 @@ export default class AddEvent extends Component {
         }
 
         const blockCheckboxes = [];
-        const blocks = ["A", "B", "C", "D", "E", "F", "G"];
+        const blocks = Settings.blocks;
         for (let i = 0; i < blocks.length; i++) {
             blockCheckboxes.push(
                 <FormControlLabel
@@ -95,6 +132,34 @@ export default class AddEvent extends Component {
                     }
                     label={blocks[i]}
                 />
+            );
+        }
+
+        const gradeCheckboxes = [];
+        const grades = Settings.grades;
+        for (let i = 0; i < grades.length; i++) {
+            gradeCheckboxes.push(
+                <FormControlLabel
+                    key={i}
+                    control={
+                        <Checkbox
+                            key={i}
+                            num={i}
+                            checked={this.state.grades[i]}
+                            onChange={this.handleGradeChange(i)}
+                            value={grades[i]}
+                        />
+                    }
+                    label={grades[i]}
+                />
+            );
+        }
+
+        const departmentMenuItems = [];
+        const departments = Settings.departments;
+        for (let i = 0; i < departments.length; i++) {
+            departmentMenuItems.push(
+                <MenuItem value={i} key={i}>{departments[i].name}</MenuItem>
             );
         }
 
@@ -139,12 +204,7 @@ export default class AddEvent extends Component {
                                         onChange={this.handleTextChange('department')}
                                         style={styles.input}
                                     >
-                                        <MenuItem value={0}>Art</MenuItem>
-                                        <MenuItem value={1}>English</MenuItem>
-                                        <MenuItem value={2}>History</MenuItem>
-                                        <MenuItem value={3}>Language</MenuItem>
-                                        <MenuItem value={4}>Math</MenuItem>
-                                        <MenuItem value={5}>Science</MenuItem>
+                                        {departmentMenuItems}
                                     </Select>
                                 </FormControl>
                                 <br />
@@ -161,7 +221,6 @@ export default class AddEvent extends Component {
                                     id="date"
                                     label="Date"
                                     type="date"
-                                    value={this.state.date}
                                     onChange={this.handleTextChange('date')}
                                     style={styles.input}
                                     InputLabelProps={{
@@ -175,6 +234,12 @@ export default class AddEvent extends Component {
                             <Paper elevation={4} style={styles.paper}>
                                 <Typography style={{ width: "100%", margin: "16px 0px 0px 16px" }} variant="title">Assessment Details</Typography>
                                 <FormControl component="fieldset" style={styles.input}>
+                                    <FormLabel component="legend">Affected Blocks</FormLabel>
+                                    <FormGroup>
+                                        {blockCheckboxes}
+                                    </FormGroup>
+                                </FormControl>
+                                <FormControl component="fieldset" style={styles.input}>
                                     <FormLabel component="legend">Assessment Type</FormLabel>
                                     <RadioGroup
                                         aria-label="type"
@@ -186,9 +251,9 @@ export default class AddEvent extends Component {
                                     </RadioGroup>
                                 </FormControl>
                                 <FormControl component="fieldset" style={styles.input}>
-                                    <FormLabel component="legend">Affected Blocks</FormLabel>
+                                    <FormLabel component="legend">Affected Grades</FormLabel>
                                     <FormGroup>
-                                        {blockCheckboxes}
+                                        {gradeCheckboxes}
                                     </FormGroup>
                                 </FormControl>
                             </Paper>
