@@ -26,7 +26,7 @@ export class Calendar extends Component {
                 //console.log("success deleting, now adding...");
                 Meteor.call('addEvent', {
                     name: event.name,
-                    className: event.className,
+                    classTitle: event.classTitle,
                     department: event.department,
                     date: event.start.format('YYYY-MM-DD'),
                     type: event.type,
