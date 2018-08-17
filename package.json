@@ -16,5 +16,9 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.0.0-beta.55"
+  },
+  "engines": {
+    "node": "8.11.3",
+    "npm": "6.3.0"
   }
 }
