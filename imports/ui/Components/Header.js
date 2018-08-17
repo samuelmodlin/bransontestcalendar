@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -33,6 +34,9 @@ export default class Header extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
+  adminPanel = () => {
+    console.log(Meteor.user().profile.admin);
+  }
   logout = (andGoogle) => {
     this.handleClose();
     this.props.logout();
@@ -81,7 +85,7 @@ export default class Header extends React.Component {
               >
                 <MenuItem onClick={this.logout}>Logout</MenuItem>
 
-                <MenuItem onClick={this.handleClose}>Admin Panel</MenuItem>
+                <MenuItem onClick={this.adminPanel}>Admin Panel</MenuItem>
               </Menu>
             </div>
           </Toolbar>

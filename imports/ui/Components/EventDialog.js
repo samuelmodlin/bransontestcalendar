@@ -15,16 +15,23 @@ function Transition(props) {
 
 export default class EventDialog extends React.Component {
     deleteEvent = () => {
+        if (confirm("Are you sure you want to delete this event?")){
+            this.props.handleClose();
+            Meteor.call('removeEvent', {
+                id: this.props.event._id,
+                googleId: this.props.event.googleId,
+            }, (err, res) => {
+                if (err) {
+                    alert(err);
+                } else {
+                    this.props.handleClose();
+                }
+            });
+        }
+    }
+    handleEdit = () => {
         this.props.handleClose();
-        Meteor.call('removeEvent', {
-            id: this.props.event._id
-        }, (err, res) => {
-            if (err) {
-                alert(err);
-            } else {
-                this.props.handleClose();
-            }
-        })
+        this.props.handleEditOpen();
     }
     render() {
         if (this.props.event != null) {
@@ -44,6 +51,7 @@ export default class EventDialog extends React.Component {
             grades = grades.substring(0, grades.length-2);
 
             const { open } = this.props;
+
             console.log(this.props.event);
             return (
                 <div>
@@ -60,30 +68,30 @@ export default class EventDialog extends React.Component {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                                Posted By: {this.props.event.name}
+                                <b>Posted By:</b> {this.props.event.name}
                                 <br/>
-                                Department: {Settings.departments[this.props.event.department].name}
+                                <b>Department:</b> {Settings.departments[this.props.event.department].name}
                                 <br/>
-                                Class: {this.props.event.className}
+                                <b>Class:</b> {Settings.departments[this.props.event.department].classes[this.props.event.classTitle]}
                                 <br/>
-                                Date of Assessment: {this.props.event.start._i}
+                                <b>Date of Assessment:</b> {this.props.event.start._i}
                                 <br/>
-                                Type of Assessment: {this.props.event.type}
+                                <b>Type of Assessment:</b> {this.props.event.type}
                                 <br/>
-                                Blocks: {blocks}
+                                <b>Blocks:</b> {blocks}
                                 <br/>
-                                Grades: {grades}
+                                <b>Grades:</b> {grades}
                                 <br/>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             { 
-                                Meteor.userId() == this.props.event.googleId ?
+                                Meteor.userId() == this.props.event.googleId || Meteor.user().profile.admin ?
                                 <span>
                                     <Button onClick={this.deleteEvent} color="secondary">
                                         Delete
                                     </Button>
-                                    <Button onClick={this.props.handleClose} color="primary">
+                                    <Button onClick={this.handleEdit} color="primary">
                                         Edit
                                     </Button>
                                 </span>

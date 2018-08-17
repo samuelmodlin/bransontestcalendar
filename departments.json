@@ -3,37 +3,148 @@
         {
             "name": "Art",
             "classes": [
-
+                "Dance I",
+                "Dance II",
+                "Dance III",
+                "Dance IV",
+                "Dance V",
+                "Dance Perf",
+                "ADM I",
+                "ADM II",
+                "ADM III",
+                "Beg Act",
+                "Int Act",
+                "Adv Act",
+                "Act Perf",
+                "Survey",
+                "Design Think",
+                "Int D&P",
+                "Adv D&P",
+                "Int Photo",
+                "Adv Photo",
+                "Int Sculpt",
+                "Adv Sculpt",
+                "Port Review",
+                "AP Art Hist",
+                "Music & Perf",
+                "Chamb Singers",
+                "PS: Classical",
+                "PS: Jazz",
+                "PS: Rock"
             ]
         },
         {
             "name": "English",
             "classes": [
-
+                "English I",
+                "English II",
+                "Composing",
+                "Am Lit I",
+                "Am List II",
+                "Am Lit III",
+                "Am Lit IV",
+                "Af Am Lit I",
+                "Af Am Lit II",
+                "20th Cent II",
+                "20th Cent III",
+                "20th Cent IV",
+                "Brit Lit I",
+                "Brit Lit II",
+                "Brit Lit III",
+                "Brit Lit IV",
+                "Brit Lit V",
+                "Euro Lit I",
+                "Euro Lit II",
+                "Euro Lit III",
+                "World Lit I",
+                "World Lit II",
+                "World Lit III"
             ]
         },
         {
             "name": "History",
             "classes": [
+                "Roots",
+                "Modern World",
+                "US History",
+                "Islam",
+                "Ethics",
+                "Micro",
+                "Macro",
+                "Current Econ",
+                "Const & Contr",
+                "Lat Amer Dict",
+                "Hip Hop",
+                "Russia to Putin",
+                "Hist of English",
+                "WWII",
+                "Social Entrep"
 
             ]
         },
         {
             "name": "Language",
             "classes": [
-
+                "Latin I",
+                "Latin II",
+                "Latin III",
+                "Latin IV",
+                "Span I",
+                "Span II",
+                "Span III",
+                "Span IV AP",
+                "Span V",
+                "Span Native",
+                "Italian I",
+                "Italian II",
+                "Italian III",
+                "Italian IV AP",
+                "Mand I",
+                "Mand II",
+                "Mand III",
+                "Mand IV",
+                "Mand V AP"
             ]
         },
         {
             "name": "Math",
             "classes": [
-
+                "Algebra I",
+                "Geo",
+                "Geo H",
+                "Algebra II",
+                "Algebra II H",
+                "Linear",
+                "Precalc I",
+                "Precalc II",
+                "Precalc H",
+                "Calculus",
+                "Calc AB",
+                "Calc BC",
+                "AP Stat",
+                "Arduino",
+                "Python",
+                "Java",
+                "Mobile App",
+                "Web Page",
+                "Web DB"
             ]
         },
         {
             "name": "Science",
             "classes": [
-                
+                "Physics",
+                "Physics H",
+                "Chem",
+                "Chem H",
+                "Bio H",
+                "Marine Bio",
+                "Bio Tech",
+                "Micro",
+                "Astro",
+                "Adv Env",
+                "AP Physics",
+                "AP Chem"
             ]
         }
     ],
@@ -42,7 +153,8 @@
         "Test",
         "Paper",
         "Project", 
-        "Lab Report" 
+        "Lab Report",
+        "Other"
     ],
 
     "blocks": [

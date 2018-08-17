@@ -9,3 +9,11 @@
 .fc-event-container:hover {
     cursor: pointer;
 }
+
+.react-datepicker-wrapper {
+    margin-left: 16px;
+    margin-top: 42px;
+}
+.react-datepicker__input-container > input {
+    width: 200px;
+}

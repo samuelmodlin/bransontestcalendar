@@ -10,14 +10,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import { withTracker } from 'meteor/react-meteor-data';
 
 
-export default class SettingsModal extends React.Component {
+class SettingsModal extends React.Component {
     state = {
-        department: 0,
+        department: this.props.department,
     };
 
     handleSave = () => {
+        Meteor.call('changeDepartment', {
+            department: this.state.department
+        });
         this.props.handleClose();
     };
 
@@ -72,3 +76,9 @@ export default class SettingsModal extends React.Component {
     }
 }
 
+export default withTracker(props => {
+    Session.set('department', Meteor.user().profile.department);
+    return {
+        department: Meteor.user().profile.department,
+    }
+})(SettingsModal);

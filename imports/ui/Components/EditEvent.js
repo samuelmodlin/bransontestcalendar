@@ -29,8 +29,6 @@ import Settings from "../../../departments.json";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import 'react-datepicker/dist/react-datepicker.css';
-
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
@@ -48,50 +46,58 @@ const styles = {
         marginBottom: "8px",
     },
 }
-export default class AddEvent extends Component {
+export default class EditEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: this.props.name,
-            classTitle: this.props.classTitle,
-            department: this.props.department,
-            date: this.props.date,
-            type: this.props.type,
-            blocks: this.props.blocks,
-            grades: this.props.grades,
+            name: this.props.event.name,
+            classTitle: this.props.event.classTitle,
+            department: this.props.event.department,
+            date: this.props.event.start,
+            type: this.props.event.type,
+            blocks: this.props.event.blocks,
+            grades: this.props.event.grades,
+            edited: false,
         }
         this.handleDateChange = this.handleDateChange.bind(this);
     }
-    addAssessment = () => {
-        if (this.state.name == "" || this.state.class == "" || this.state.date == undefined || this.state.type == undefined || this.state.blocks == [false, false, false, false, false, false, false] || this.state.grades == [false, false, false, false]) {
+
+    editAssessment = () => {
+        // console.log(Meteor.userId());
+        // console.log(this.props.event.googleId);
+        if (this.state.name == "" || this.state.classTitle == "" || this.state.date == undefined || this.state.type == undefined || this.state.blocks == [false, false, false, false, false, false, false] || this.state.grades == [false, false, false, false]) {
             alert("Please fill out all fields!");
         }
         else {
-            Meteor.call('addEvent', {
-                name: this.state.name,
-                classTitle: this.state.classTitle,
-                department: this.state.department,
-                date: this.state.date.format('YYYY-MM-DD'),
-                type: this.state.type,
-                blocks: this.state.blocks,
-                grades: this.state.grades,
-                created: new Date(),
-                googleId: Meteor.userId(),
+            Meteor.call('removeEvent', {
+                id: this.props.event._id,
+                googleId: this.props.event.googleId,
             }, (err, res) => {
                 if (err) {
-                    alert("Assessment not added due to error. Please contact administrator if this happens!");
+                    // console.log("Error with deleting event!")
                 } else {
-                    this.setState({
-                        classTitle: "",
-                        department: 0,
-                        date: undefined,
-                        type: undefined,
-                        blocks: [false, false, false, false, false, false, false],
-                        grades: [false, false, false, false],
+                    // console.log("success deleting, now adding...");
+                    Meteor.call('addEvent', {
+                        name: this.state.name,
+                        classTitle: this.state.classTitle,
+                        department: this.state.department,
+                        date: this.state.date.format('YYYY-MM-DD'),
+                        type: this.state.type,
+                        blocks: this.state.blocks,
+                        grades: this.state.grades,
+                        created: new Date(),
+                        googleId: this.props.event.googleId,
+                    }, (err, res) => {
+                        if (err) {
+                            // console.log("error adding event");
+                        } else {
+                            // console.log("success with edit");
+                        }
                     });
-                    this.props.handleModalClose();
                 }
             });
+
+            this.props.handleModalClose();
         }
     }
     isWeekday = (date) => {
@@ -101,25 +107,27 @@ export default class AddEvent extends Component {
     handleDateChange = (date) => {
         this.setState({
             date: date,
+            edited: true,
         })
     }
     handleTextChange = name => event => {
         this.setState({
             [name]: event.target.value,
+            ["edited"]: true,
         });
     }
     handleBlockChange = id => event => {
         const blocks = this.state.blocks;
         blocks[id] = event.target.checked;
-        this.setState({ ["blocks"]: blocks });
+        this.setState({ ["blocks"]: blocks, ["edited"]: true });
     }
     handleGradeChange = id => event => {
         const grades = this.state.grades;
         grades[id] = event.target.checked;
-        this.setState({ ["grades"]: grades });
+        this.setState({ ["grades"]: grades, ["edited"]: true });
     }
     render() {
-        const { addModal } = this.props
+        const { editModal } = this.props
         const { handleModalClose } = this.props
 
         const typeRadioButtons = [];
@@ -186,11 +194,12 @@ export default class AddEvent extends Component {
             );
         }
 
+        console.log(this.state.date);
         return (
             <div>
                 <Dialog
                     fullScreen
-                    open={addModal}
+                    open={editModal}
                     onClose={handleModalClose}
                     TransitionComponent={Transition}
                 >
@@ -200,11 +209,19 @@ export default class AddEvent extends Component {
                                 <CloseIcon />
                             </IconButton>
                             <Typography variant="title" color="inherit" style={{ flex: '1' }}>
-                                Add New Assessment
+                                Edit Assessment
                         </Typography>
-                            <Button variant="raised" color="secondary" onClick={this.addAssessment}>
-                                ADD
-                        </Button>
+                            {
+                                this.state.edited
+                                    ?
+                                    <Button variant="raised" color="secondary" onClick={this.editAssessment}>
+                                        EDIT
+                                </Button>
+                                    :
+                                    <Button variant="raised" color="secondary" disabled>
+                                        EDIT
+                                </Button>
+                            }
                         </Toolbar>
                     </AppBar>
                     <Grid container spacing={0} style={{}}>
@@ -242,16 +259,6 @@ export default class AddEvent extends Component {
                                     </Select>
                                 </FormControl>
                                 <br />
-                                {/* <TextField
-                                    id="date"
-                                    label="Date"
-                                    type="date"
-                                    onChange={this.handleTextChange('date')}
-                                    style={styles.input}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                /> */}
                                 <DatePicker
                                     style={styles.input}
                                     selected={this.state.date}
@@ -261,6 +268,7 @@ export default class AddEvent extends Component {
                                     minDate={moment()}
                                     showDisabledMonthNavigation={true}
                                 />
+
                             </Paper>
                         </Grid>
                         <Grid item xs={6} style={{}}>
