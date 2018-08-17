@@ -4,7 +4,7 @@ Meteor.startup(() => {
         {
           $set: {
             clientId: Meteor.settings.private.google.clientID,
-            loginStyle: 'popup',
+            loginStyle: 'redirect',
             secret: Meteor.settings.private.google.secret,
           }
         }
