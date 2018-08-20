@@ -216,11 +216,11 @@ export default class EditEvent extends Component {
                                 this.state.edited
                                     ?
                                     <Button variant="raised" color="secondary" onClick={this.editAssessment}>
-                                        EDIT
+                                        SAVE
                                 </Button>
                                     :
                                     <Button variant="raised" color="secondary" disabled>
-                                        EDIT
+                                        SAVE
                                 </Button>
                             }
                         </Toolbar>
