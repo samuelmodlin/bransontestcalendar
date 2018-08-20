@@ -63,7 +63,7 @@ export default class AddEvent extends Component {
         this.handleDateChange = this.handleDateChange.bind(this);
     }
     addAssessment = () => {
-        if (this.state.name == "" || this.state.class == "" || this.state.date == undefined || this.state.type == undefined || this.state.blocks == [false, false, false, false, false, false, false] || this.state.grades == [false, false, false, false]) {
+        if (this.state.name == "" || this.state.class == "" || this.state.date == undefined || this.state.type == undefined || !this.state.blocks.includes(true) || !this.state.grades.includes(true)) {
             alert("Please fill out all fields!");
         }
         else {

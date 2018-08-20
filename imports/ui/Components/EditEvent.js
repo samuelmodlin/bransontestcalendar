@@ -65,7 +65,8 @@ export default class EditEvent extends Component {
     editAssessment = () => {
         // console.log(Meteor.userId());
         // console.log(this.props.event.googleId);
-        if (this.state.name == "" || this.state.classTitle == "" || this.state.date == undefined || this.state.type == undefined || this.state.blocks == [false, false, false, false, false, false, false] || this.state.grades == [false, false, false, false]) {
+        console.log(this.state.grades);
+        if (this.state.name == "" || this.state.classTitle == "" || this.state.date == undefined || this.state.type == undefined || !this.state.blocks.includes(true) || !this.state.grades.includes(true)) {
             alert("Please fill out all fields!");
         }
         else {
