@@ -70,6 +70,11 @@ export default class App extends Component {
                 this.setState({ loggedIn: true });
             }
         });
+        Tracker.autorun(() => {
+            if (Meteor.user() != null) {
+                this.setState({loggedIn: true});
+            }
+        });
     }
     logout = () => {
         Meteor.logout(() => {
