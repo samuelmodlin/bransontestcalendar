@@ -6,7 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Settings from '../../../departments.json';
 
 function Transition(props) {
@@ -63,9 +64,9 @@ export default class EventDialog extends React.Component {
                         aria-labelledby="alert-dialog-slide-title"
                         aria-describedby="alert-dialog-slide-description"
                     >
-                        <DialogTitle id="alert-dialog-slide-title">
-                            {Settings.departments[this.props.event.department].name + " " + this.props.event.type}
-                        </DialogTitle>
+                        <IconButton style={{marginTop: '5px', marginLeft: '5px'}} color="inherit" onClick={this.props.handleClose} aria-label="Close">
+                            <CloseIcon />
+                        </IconButton>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
                                 <b>Posted By:</b> {this.props.event.name}

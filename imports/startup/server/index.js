@@ -1,6 +1,7 @@
 import './service-configuration.js';
 import { Events } from '../../api/events.js';
 import { Admins } from '../../api/admins.js';
+import { Invites } from '../../api/invites.js';
 
 Meteor.users.deny({ update: () => true });
 Accounts.validateLoginAttempt((user) => {
@@ -33,3 +34,9 @@ Accounts.onCreateUser((options, user) => {
 Meteor.publish('events', function(){
     return Events.find();
 });
+
+Meteor.publish('invites', function(){
+    if (Meteor.user().profile.admin){
+        return Invites.find();
+    }
+})

@@ -1,6 +1,9 @@
 import './accounts.js';
 import { Meteor } from 'meteor/meteor';
 import { Events } from '../../api/events.js';
+import { Invites } from '../../api/invites.js';
+import { Admins } from '../../api/admins.js';
+
 import Settings from '../../../departments.json'
 
 Meteor.methods({
@@ -34,6 +37,13 @@ Meteor.methods({
         if (Meteor.userId() !== null) {
             Meteor.users.update({ _id: Meteor.userId()},
                 { $set: { 'profile.department': department }});
+        }
+    },
+    'addInvite'({ email }) {
+        if (Meteor.userId() !== null) {
+            if (Meteor.user().profile.admin) {
+                Invite.insert({email: email});
+            }
         }
     }
 });

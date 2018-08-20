@@ -18,7 +18,8 @@ export class Calendar extends Component {
     }
     moveDate(event){
         Meteor.call('removeEvent', {
-            id: event._id
+            id: event._id,
+            googleId: Meteor.userId()
         }, (err, res) => {
             if (err) {
                 //console.log("Error with deleting event!")

@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
+import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -32,7 +32,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function Transition(props) {
-    return <Slide direction="up" {...props} />;
+    return <Fade direction="up" {...props} />;
 }
 const styles = {
     paper: {

@@ -84,8 +84,10 @@ export default class Header extends React.Component {
                 onClose={this.handleClose}
               >
                 <MenuItem onClick={this.logout}>Logout</MenuItem>
-
-                <MenuItem onClick={this.adminPanel}>Admin Panel</MenuItem>
+                {
+                  (Meteor.user().profile.admin) &&
+                  <MenuItem onClick={this.adminPanel}>Admin Panel</MenuItem>
+                }
               </Menu>
             </div>
           </Toolbar>
