@@ -23,6 +23,7 @@ export default class App extends Component {
         loggedIn: false,
         eventDialog: false,
         eventObject: null,
+        selectedDate: undefined,
     }
     componentWillMount = () => {
         if (Meteor.userId() === null) {
@@ -31,6 +32,9 @@ export default class App extends Component {
         else {
             this.setState({ loggedIn: true });
         }
+    }
+    selectDate = (date) => {
+        this.setState({ selectedDate: date });
     }
     handleModalOpen = () => {
         this.setState({ addModal: true });
@@ -85,6 +89,8 @@ export default class App extends Component {
                         />
                         <Fullcalendar
                             handleDialogOpen={this.handleDialogOpen}
+                            handleModalOpen={this.handleModalOpen}
+                            selectDate={this.selectDate}
                         />
                         <Button onClick={this.handleModalOpen} variant="fab" color="primary" aria-label="add" style={{ position: 'fixed', right: '5px', bottom: '5px', zIndex: "99" }}>
                             <AddIcon />
@@ -97,7 +103,7 @@ export default class App extends Component {
                                 name={Meteor.user().profile.name}
                                 classTitle=""
                                 department={Meteor.user().profile.department}
-                                date={undefined}
+                                date={this.state.selectedDate}
                                 type={undefined}
                                 blocks={[false, false, false, false, false, false, false]}
                                 grades={[false, false, false, false]}

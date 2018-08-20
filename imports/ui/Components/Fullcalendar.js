@@ -62,6 +62,10 @@ export class Calendar extends Component {
                 this.moveDate(event);
             },
             eventColor: 'rgb(63, 81, 181)',
+            dayClick: (date, jsEvent, view) => {
+                this.props.selectDate(date);
+                this.props.handleModalOpen();
+            },
             hiddenDays: [0, 6],
             views: {
                 basicWeek: {
@@ -113,9 +117,12 @@ export default withTracker(props => {
 
             blocks = blocks.substring(0, blocks.length-2);
             grades = grades.substring(0, grades.length-2);
+
             obj.title = Settings.departments[obj.department].classes[obj.classTitle] 
                         + " " + obj.type
                         + " (" + blocks + ")"
+                        + " (" + grades + ")";
+
             if (obj.googleId == Meteor.userId()){
                 obj.editable = true;
                 obj.color = 'rgb(245, 0, 87)';
