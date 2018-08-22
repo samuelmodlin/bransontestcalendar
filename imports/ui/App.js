@@ -9,6 +9,7 @@ import Fullcalendar from './Components/Fullcalendar.js';
 import Header from './Components/Header.js';
 import AddEvent from './Components/AddEvent.js';
 import SettingsModal from './Components/SettingsModal.js';
+import AdminPanel from './Components/AdminPanel.js';
 
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
@@ -24,6 +25,7 @@ export default class App extends Component {
         eventDialog: false,
         eventObject: null,
         selectedDate: undefined,
+        adminPanel: false,
     }
     componentWillMount = () => {
         if (Meteor.userId() === null) {
@@ -35,6 +37,12 @@ export default class App extends Component {
     }
     selectDate = (date) => {
         this.setState({ selectedDate: date });
+    }
+    handleAdminOpen = () => {
+        this.setState({ adminPanel: true });
+    }
+    handleAdminClose = () => {
+        this.setState({ adminPanel: false })
     }
     handleModalOpen = () => {
         this.setState({ addModal: true });
@@ -91,6 +99,7 @@ export default class App extends Component {
                             handleSettingsOpen={this.handleSettingsOpen}
                             style={{ marginBottom: "10px" }}
                             logout={this.logout}
+                            handleAdminOpen={this.handleAdminOpen}
                         />
                         <Fullcalendar
                             handleDialogOpen={this.handleDialogOpen}
@@ -136,6 +145,13 @@ export default class App extends Component {
                                 handleClose={this.handleDialogClose}
                                 event={this.state.eventObject}
                                 handleEditOpen={this.handleEditOpen}
+                            />
+                        }
+                        {
+                            this.state.adminPanel &&
+                            <AdminPanel 
+                                open={this.state.adminPanel}
+                                handleClose={this.handleAdminClose}
                             />
                         }
                     </div>

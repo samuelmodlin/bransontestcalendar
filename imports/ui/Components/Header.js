@@ -35,8 +35,10 @@ export default class Header extends React.Component {
     this.setState({ anchorEl: null });
   };
   adminPanel = () => {
-    console.log(Meteor.user().profile.admin);
+    this.handleClose();
+    this.props.handleAdminOpen();
   }
+
   logout = (andGoogle) => {
     this.handleClose();
     this.props.logout();

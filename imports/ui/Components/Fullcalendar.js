@@ -48,7 +48,7 @@ export class Calendar extends Component {
     render() {
         return (
             <div style={{ marginTop: "15px" }} className="bootstrap-scope">
-                <div style={{ margin: "0 auto", maxWidth: '1012px' }} className="bootstrap-scope" id="calendar">
+                <div style={{ margin: "0 auto", maxWidth: '1265px' }} className="bootstrap-scope" id="calendar">
                 </div>
             </div>
         );
@@ -66,7 +66,7 @@ export class Calendar extends Component {
                 this.props.selectDate(date);
                 this.props.handleModalOpen();
             },
-            hiddenDays: [0, 6],
+            // hiddenDays: [0, 6],
             views: {
                 basicWeek: {
                     eventLimit: false,
