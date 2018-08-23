@@ -13,7 +13,6 @@ export class Calendar extends Component {
         handleDialogOpen: this.props.handleDialogOpen, 
     }
     openDialog = (eventObject) => {
-        console.log(eventObject.className);
         this.state.handleDialogOpen(eventObject);
     }
     moveDate(event){
@@ -118,7 +117,7 @@ export default withTracker(props => {
             blocks = blocks.substring(0, blocks.length-2);
             grades = grades.substring(0, grades.length-2);
 
-            obj.title = Settings.departments[obj.department].classes[obj.classTitle] 
+            obj.title = obj.classTitle 
                         + " " + obj.type
                         + " (" + blocks + ")"
                         + " (" + grades + ")";

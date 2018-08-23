@@ -63,8 +63,6 @@ export default class EditEvent extends Component {
     }
 
     editAssessment = () => {
-        // console.log(Meteor.userId());
-        // console.log(this.props.event.googleId);
         console.log(this.state.grades);
         if (this.state.name == "" || this.state.classTitle == "" || this.state.date == undefined || this.state.type == undefined || !this.state.blocks.includes(true) || !this.state.grades.includes(true)) {
             alert("Please fill out all fields!");
@@ -75,9 +73,8 @@ export default class EditEvent extends Component {
                 googleId: this.props.event.googleId,
             }, (err, res) => {
                 if (err) {
-                    // console.log("Error with deleting event!")
+                    console.log("Error with deleting event!")
                 } else {
-                    // console.log("success deleting, now adding...");
                     Meteor.call('addEvent', {
                         name: this.state.name,
                         classTitle: this.state.classTitle,
@@ -90,9 +87,9 @@ export default class EditEvent extends Component {
                         googleId: this.props.event.googleId,
                     }, (err, res) => {
                         if (err) {
-                            // console.log("error adding event");
+                            console.log("error adding event");
                         } else {
-                            // console.log("success with edit");
+                            //success
                         }
                     });
                 }
@@ -180,20 +177,14 @@ export default class EditEvent extends Component {
         }
 
         const departmentMenuItems = [];
-        const departments = Settings.departments;
-        for (let i = 0; i < departments.length; i++) {
-            departmentMenuItems.push(
-                <MenuItem value={i} key={i}>{departments[i].name}</MenuItem>
-            );
-        }
+        departmentMenuItems.push(
+            <MenuItem value={0}>{this.props.event.department}</MenuItem>
+        );
 
         const classMenuItems = [];
-        const classes = Settings.departments[this.state.department].classes;
-        for (let i = 0; i < classes.length; i++){
-            classMenuItems.push(
-                <MenuItem value={i} key={i}>{classes[i]}</MenuItem>
-            );
-        }
+        classMenuItems.push(
+            <MenuItem value={0}>{this.props.event.classTitle}</MenuItem>
+        );
 
         console.log(this.state.date);
         return (
@@ -233,17 +224,17 @@ export default class EditEvent extends Component {
                                     id="name"
                                     label="Name"
                                     value={this.state.name}
-                                    onChange={this.handleTextChange('name')}
                                     margin="normal"
                                     style={styles.input}
+                                    disabled
                                 />
                                 <br />
                                 <FormControl style={{ marginTop: "16px" }}>
                                     <InputLabel style={{ marginLeft: "16px" }} htmlFor="department-menu">Department</InputLabel>
                                     <Select
-                                        value={this.state.department}
-                                        onChange={this.handleTextChange('department')}
+                                        value={0}
                                         style={styles.input}
+                                        disabled
                                     >
                                         {departmentMenuItems}
                                     </Select>
@@ -252,9 +243,9 @@ export default class EditEvent extends Component {
                                 <FormControl style={{ marginTop: "16px" }}>
                                     <InputLabel style={{ marginLeft: "16px" }} htmlFor="classes-menu">Class</InputLabel>
                                     <Select
-                                        value={this.state.classTitle}
-                                        onChange={this.handleTextChange('classTitle')}
+                                        value={0}
                                         style={styles.input}
+                                        disabled
                                     >
                                         {classMenuItems}
                                     </Select>

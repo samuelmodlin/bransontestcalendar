@@ -71,9 +71,9 @@ export default class EventDialog extends React.Component {
                             <DialogContentText id="alert-dialog-slide-description">
                                 <b>Posted By:</b> {this.props.event.name}
                                 <br/>
-                                <b>Department:</b> {Settings.departments[this.props.event.department].name}
+                                <b>Department:</b> {this.props.event.department}
                                 <br/>
-                                <b>Class:</b> {Settings.departments[this.props.event.department].classes[this.props.event.classTitle]}
+                                <b>Class:</b> {this.props.event.classTitle}
                                 <br/>
                                 <b>Date of Assessment:</b> {this.props.event.start._i}
                                 <br/>

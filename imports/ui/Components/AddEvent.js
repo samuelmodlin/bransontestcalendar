@@ -69,8 +69,8 @@ export default class AddEvent extends Component {
         else {
             Meteor.call('addEvent', {
                 name: this.state.name,
-                classTitle: this.state.classTitle,
-                department: this.state.department,
+                classTitle: Settings.departments[this.state.department].classes[this.state.classTitle],
+                department: Settings.departments[this.state.department].name,
                 date: this.state.date.format('YYYY-MM-DD'),
                 type: this.state.type,
                 blocks: this.state.blocks,
@@ -81,14 +81,6 @@ export default class AddEvent extends Component {
                 if (err) {
                     alert("Assessment not added due to error. Please contact administrator if this happens!");
                 } else {
-                    this.setState({
-                        classTitle: "",
-                        department: 0,
-                        date: undefined,
-                        type: undefined,
-                        blocks: [false, false, false, false, false, false, false],
-                        grades: [false, false, false, false],
-                    });
                     this.props.handleModalClose();
                 }
             });
