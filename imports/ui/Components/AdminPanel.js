@@ -13,8 +13,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Fade from '@material-ui/core/Fade';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+// import VisitDays from './VisitDays.js';
 
 function Transition(props) {
     return <Fade direction="up" {...props} />;
@@ -43,33 +48,49 @@ export default class FullScreenDialog extends React.Component {
                     onClose={this.props.handleClose}
                     TransitionComponent={Transition}
                 >
-                    <div style={{ flexGrow: "1" }}>
-                        <AppBar position="relative">
-                        <IconButton color="inherit" onClick={this.props.handleClose} aria-label="Close">
+
+                    <AppBar style={{ position: 'relative' }}>
+                        <Toolbar>
+                            <IconButton color="inherit" onClick={this.props.handleClose} aria-label="Close">
                                 <CloseIcon />
                             </IconButton>
-                            <Typography variant="title" color="inherit" style={{ marginLeft: '5px', flex: '1' }}>
+                            <Typography variant="title" color="inherit" style={{ flex: '1' }}>
                                 Admin Panel
                             </Typography>
-                            <Tabs value={this.state.value} onChange={this.handleChange}>
-                                <Tab label="Item One" />
-                                <Tab label="Item Two" />
-                                <Tab label="Item Three"/>
-                            </Tabs>
-                        </AppBar>
-                        {
-                            this.state.value === 0 &&
-                            <TabContainer>Item One</TabContainer>
-                        }
-                        {
-                            this.state.value === 1 &&
-                            <TabContainer>Item Two</TabContainer>
-                        }
-                        {
-                            this.state.value === 2 &&
-                            <TabContainer>Item Three</TabContainer>
-                        }
-                    </div>
+                        </Toolbar>
+                    </AppBar>
+                    <ExpansionPanel>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Visit Days</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            {/* <VisitDays></VisitDays> */}
+                        </ExpansionPanelDetails>
+                        <ExpansionPanelActions>
+                            <Button size="small">
+                                Cancel
+                            </Button>
+                            <Button size="small" color="primary">
+                                Save
+                            </Button>
+                        </ExpansionPanelActions>
+                    </ExpansionPanel>
+                    <ExpansionPanel disabled>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Special Events</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            <Typography>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                                sit amet blandit leo lobortis eget.
+                            </Typography>
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                    <ExpansionPanel disabled>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Admin Tools</Typography>
+                        </ExpansionPanelSummary>
+                    </ExpansionPanel>
                 </Dialog>
             </div>
         );

@@ -1,8 +1,8 @@
 import './accounts.js';
 import { Meteor } from 'meteor/meteor';
 import { Events } from '../../api/events.js';
-import { Invites } from '../../api/invites.js';
 import { Admins } from '../../api/admins.js';
+import { Specials } from '../../api/specials.js';
 
 import Settings from '../../../departments.json'
 
