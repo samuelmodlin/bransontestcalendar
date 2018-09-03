@@ -117,7 +117,7 @@ export default withTracker(props => {
     Session.set('events', Events.find({}).fetch());
     return {
         visits: Visits.find({}).fetch().map((obj) => {
-            obj.title = "Visit Day";
+            obj.title = "Admissions Visit Day";
             obj.created = new Date(1999, 1, 1);
             obj.editable = false;
             obj.className = "fc-visitday";
