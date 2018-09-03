@@ -154,8 +154,8 @@ export default withTracker(props => {
             } 
             else {
                 obj.editable = false;
+                obj.color = 'rgb(63, 81, 181)';
             }
-            obj.color = 'rgb(245, 0, 87)';
 
             return obj;
         }),
