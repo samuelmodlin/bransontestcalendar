@@ -2,7 +2,7 @@ import './accounts.js';
 import { Meteor } from 'meteor/meteor';
 import { Events } from '../../api/events.js';
 import { Admins } from '../../api/admins.js';
-import { Specials } from '../../api/specials.js';
+import { Visits } from '../../api/visits.js';
 
 import Settings from '../../../departments.json'
 
@@ -45,5 +45,17 @@ Meteor.methods({
                 Invite.insert({email: email});
             }
         }
-    }
+    },
+    'toggleVisit'({ start }) {
+        if (Meteor.userId() !== null) {
+            if (Meteor.user().profile.admin) {
+                if (Visits.findOne({start: start})){
+                    Visits.remove({start: start})
+                } else {
+                    Visits.insert({start: start});
+                }
+            }
+        }
+    },
+    
 });

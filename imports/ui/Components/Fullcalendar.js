@@ -4,6 +4,7 @@ import './Styles/bootstrap.min.css';
 import 'fullcalendar/dist/fullcalendar.min.css';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Events } from '../../api/events.js';
+import { Visits } from '../../api/visits.js';
 import { Session } from 'meteor/session';
 import Settings from '../../../departments.json';
 import moment from 'moment';
@@ -46,7 +47,7 @@ export class Calendar extends Component {
     }
     render() {
         return (
-            <div style={{ marginTop: "15px" }} className="bootstrap-scope">
+            <div style={{ marginTop: "15px" }} className="bootstrap-scope assessments">
                 <div style={{ margin: "0 auto", maxWidth: '1265px' }} className="bootstrap-scope" id="calendar">
                 </div>
             </div>
@@ -55,17 +56,23 @@ export class Calendar extends Component {
     componentDidMount() {
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
-            events: this.props.events,
+            events: this.props.events.concat(this.props.visits),
             eventLimit: 4,
             eventDrop: (event, delta, revertFunc) => {
                 this.moveDate(event);
             },
-            eventColor: 'rgb(63, 81, 181)',
+            eventColor: 'dimgray',
             dayClick: (date, jsEvent, view) => {
-                this.props.selectDate(date);
-                this.props.handleModalOpen();
+                if (jsEvent.target.classList.contains('fc-future')){
+                    this.props.selectDate(date);
+                    this.props.handleModalOpen();
+                }
             },
-            // hiddenDays: [0, 6],
+            validRange: {
+                start: moment().subtract(2, 'months').startOf('month').format('YYYY-MM-DD'),
+                end: moment().add(10, 'months').endOf('month').format('YYYY-MM-DD')
+            },
+            hiddenDays: [0, 6],
             views: {
                 basicWeek: {
                     eventLimit: false,
@@ -85,21 +92,40 @@ export class Calendar extends Component {
                 right: 'month,basicWeek'
             },
             eventClick: (calEvent) => {
-                // alert('Event: ' + calEvent.title);
-                this.openDialog(calEvent);
+                if (!(calEvent.title === "Visit Day")){
+                    this.openDialog(calEvent);
+                }
+            },
+            dayRender: (date, cell) => {
+                let visits = this.props.visits;
+                for (let i = 0; i < visits.length; i++){
+                    if (visits[i].start  == date.format('YYYY-MM-DD')){
+                        
+                    }
+                }
             }
         });    
     }
     componentDidUpdate() {
         $("#calendar").fullCalendar('removeEvents'); 
         $("#calendar").fullCalendar('addEventSource', this.props.events); 
+        $("#calendar").fullCalendar('addEventSource', this.props.visits); 
     }
 }
 
 export default withTracker(props => {
     Session.set('events', Events.find({}).fetch());
     return {
-        events: Events.find({}).fetch().map((obj) => {
+        visits: Visits.find({}).fetch().map((obj) => {
+            obj.title = "Visit Day";
+            obj.created = new Date(1999, 1, 1);
+            obj.editable = false;
+            obj.className = "fc-visitday";
+            obj.eventColor = 'rgb(0, 0, 0)';
+
+            return obj;
+        }),
+        events: Session.get('events').map((obj) => {
             let blocks = "";
             let grades = "";
 

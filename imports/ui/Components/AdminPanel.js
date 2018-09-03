@@ -19,7 +19,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// import VisitDays from './VisitDays.js';
+import VisitDays from './VisitDays.js';
 
 function Transition(props) {
     return <Fade direction="up" {...props} />;
@@ -64,16 +64,8 @@ export default class FullScreenDialog extends React.Component {
                             <Typography>Visit Days</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            {/* <VisitDays></VisitDays> */}
+                            <VisitDays></VisitDays>
                         </ExpansionPanelDetails>
-                        <ExpansionPanelActions>
-                            <Button size="small">
-                                Cancel
-                            </Button>
-                            <Button size="small" color="primary">
-                                Save
-                            </Button>
-                        </ExpansionPanelActions>
                     </ExpansionPanel>
                     <ExpansionPanel disabled>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

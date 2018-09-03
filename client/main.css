@@ -4,7 +4,7 @@
 .fc-popover {
     background-color: white !important;
 }
-.fc-event-container:hover {
+#calendar .fc-event-container:hover {
     cursor: pointer;
 }
 .react-datepicker-wrapper {
@@ -14,7 +14,16 @@
 .react-datepicker__input-container > input {
     width: 200px;
 }
-.fc-body {
+#calendar .fc-future {
     cursor: cell;
     font-size: 11.75px;
+}
+#calendar .fc-past {
+    /* background-color: lightgray; */
+}
+#visit-days .fc-body:hover {
+    cursor: pointer;
+}
+.fc-visitday {
+    cursor: default;
 }
