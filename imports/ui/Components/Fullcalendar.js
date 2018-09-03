@@ -121,8 +121,7 @@ export default withTracker(props => {
             obj.created = new Date(1999, 1, 1);
             obj.editable = false;
             obj.className = "fc-visitday";
-            obj.eventColor = 'rgb(0, 0, 0)';
-
+                    
             return obj;
         }),
         events: Session.get('events').map((obj) => {
@@ -156,7 +155,7 @@ export default withTracker(props => {
             else {
                 obj.editable = false;
             }
-            obj.eventColor = 'rgb(245, 0, 87)';
+            obj.color = 'rgb(245, 0, 87)';
 
             return obj;
         }),
