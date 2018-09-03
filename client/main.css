@@ -18,9 +18,6 @@
     cursor: cell;
     font-size: 11.75px;
 }
-#calendar .fc-past {
-    /* background-color: lightgray; */
-}
 #visit-days .fc-body:hover {
     cursor: pointer;
 }
