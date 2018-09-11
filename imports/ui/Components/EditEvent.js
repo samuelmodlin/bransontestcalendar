@@ -63,7 +63,6 @@ export default class EditEvent extends Component {
     }
 
     editAssessment = () => {
-        console.log(this.state.grades);
         if (this.state.name == "" || this.state.classTitle == "" || this.state.date == undefined || this.state.type == undefined || !this.state.blocks.includes(true) || !this.state.grades.includes(true)) {
             alert("Please fill out all fields!");
         }
@@ -186,7 +185,6 @@ export default class EditEvent extends Component {
             <MenuItem value={0}>{this.props.event.classTitle}</MenuItem>
         );
 
-        console.log(this.state.date);
         return (
             <div>
                 <Dialog

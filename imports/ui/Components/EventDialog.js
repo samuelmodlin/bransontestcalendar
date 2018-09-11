@@ -53,7 +53,6 @@ export default class EventDialog extends React.Component {
 
             const { open } = this.props;
 
-            console.log(this.props.event);
             return (
                 <div>
                     <Dialog
