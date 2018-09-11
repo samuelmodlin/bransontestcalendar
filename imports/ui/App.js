@@ -70,17 +70,17 @@ export default class App extends Component {
         this.setState({ eventDialog: false });
     }
     loginWithGoogle = () => {
+        Tracker.autorun(() => {
+            if (Meteor.user() != null) {
+                this.setState({loggedIn: true});
+            }
+        });
         Meteor.loginWithGoogle({
         }, (err) => {
             if (err) {
                 this.setState({ loggedIn: false });
             } else {
                 this.setState({ loggedIn: true });
-            }
-        });
-        Tracker.autorun(() => {
-            if (Meteor.user() != null) {
-                this.setState({loggedIn: true});
             }
         });
     }

@@ -92,7 +92,7 @@ export class Calendar extends Component {
                 right: 'month,basicWeek'
             },
             eventClick: (calEvent) => {
-                if (!(calEvent.title === "Visit Day")){
+                if (!(calEvent.title === "Admissions Visit Day")){
                     this.openDialog(calEvent);
                 }
             },
