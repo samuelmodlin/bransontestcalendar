@@ -3,8 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Events } from '../../api/events.js';
 import { Admins } from '../../api/admins.js';
 import { Visits } from '../../api/visits.js';
-
-import Settings from '../../../departments.json'
+import { Settings } from '../../api/settings.js';
 
 Meteor.methods({
     'addEvent'({ name, classTitle, department, date, type, blocks, grades, created, googleId }) {
@@ -54,6 +53,13 @@ Meteor.methods({
                 } else {
                     Visits.insert({start: start});
                 }
+            }
+        }
+    },
+    'setRegistration'({ val }) {
+        if (Meteor.userId() !== null) {
+            if (Meteor.user().profile.admin) {
+                Settings.update({}, { $set: { registrationOpen: val } });
             }
         }
     },

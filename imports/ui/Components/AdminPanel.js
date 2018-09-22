@@ -18,6 +18,13 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Settings } from '../../api/settings.js';
+
+
 
 import VisitDays from './VisitDays.js';
 
@@ -35,8 +42,9 @@ export default class FullScreenDialog extends React.Component {
     state = {
         open: this.props.open,
         value: 0,
+        // registrationOpen: Settings.find({})[0].registrationOpen,
     };
-    handleChange = (event, value) => {
+    handleSwitchChange = (event, value) => {
         this.setState({ value });
     };
     render() {
@@ -67,6 +75,25 @@ export default class FullScreenDialog extends React.Component {
                             <VisitDays></VisitDays>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
+                    <ExpansionPanel>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography>Admin Tools</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                        <FormGroup row>
+                            <FormControlLabel
+                            control={
+                                <Switch disabled
+                                // checked={this.state.registrationOpen}
+                                // onChange={this.handleSwitchChange('registrationOpen')}
+                                value="New Teacher Registration"
+                                />
+                            }
+                            label="New Teacher Registration"
+                            />
+                        </FormGroup>
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
                     <ExpansionPanel disabled>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography>Special Events</Typography>
@@ -78,13 +105,10 @@ export default class FullScreenDialog extends React.Component {
                             </Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
-                    <ExpansionPanel disabled>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>Admin Tools</Typography>
-                        </ExpansionPanelSummary>
-                    </ExpansionPanel>
+                    
                 </Dialog>
             </div>
         );
     }
 }
+

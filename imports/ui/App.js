@@ -28,12 +28,11 @@ export default class App extends Component {
         adminPanel: false,
     }
     componentWillMount = () => {
-        if (Meteor.userId() === null) {
-            this.setState({ loggedIn: false });
-        }
-        else {
-            this.setState({ loggedIn: true });
-        }
+        Tracker.autorun(() => {
+            if (Meteor.user() != null) {
+                this.setState({loggedIn: true});
+            }
+        });
     }
     selectDate = (date) => {
         this.setState({ selectedDate: date });
@@ -70,19 +69,28 @@ export default class App extends Component {
         this.setState({ eventDialog: false });
     }
     loginWithGoogle = () => {
-        Tracker.autorun(() => {
-            if (Meteor.user() != null) {
-                this.setState({loggedIn: true});
-            }
-        });
-        Meteor.loginWithGoogle({
-        }, (err) => {
-            if (err) {
-                this.setState({ loggedIn: false });
-            } else {
-                this.setState({ loggedIn: true });
-            }
-        });
+        if (window.frameElement){
+            Meteor.loginWithGoogle({
+                loginStyle: 'popup',
+            }, (err) => {
+                if (err) {
+                    this.setState({ loggedIn: false });
+                } else {
+                    this.setState({ loggedIn: true });
+                }
+            });
+        }
+        else {
+            Meteor.loginWithGoogle({
+                loginStyle: 'redirect',
+            }, (err) => {
+                if (err) {
+                    this.setState({ loggedIn: false });
+                } else {
+                    this.setState({ loggedIn: true });
+                }
+            });
+        }
     }
     logout = () => {
         Meteor.logout(() => {
